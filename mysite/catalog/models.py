@@ -7,6 +7,9 @@ class Category(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
@@ -16,3 +19,6 @@ class Product(models.Model):
     create_date = models.DateTimeField(default=datetime.now)
     last_change_date = models.DateTimeField(default=datetime.now)
     image = models.ImageField(upload_to='images', null=True)
+
+    def __str__(self):
+        return self.name

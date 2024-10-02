@@ -1,0 +1,39 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "Meat",
+    "description": "Chicken and beef"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "Groceries",
+    "description": "Pasta and cereals"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "name": "Milk products",
+    "description": "Milk, eggs and cheese"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "name": "Beef steak",
+    "description": "Beef steak 150gr",
+    "category": 1,
+    "price": 10,
+    "create_date": "2024-10-02T22:12:12.963Z",
+    "last_change_date": "2024-10-02T22:12:12.963Z",
+    "image": ""
+  }
+}
+]

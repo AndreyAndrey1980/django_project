@@ -16,3 +16,4 @@ class Product(models.Model):
     create_date = models.DateTimeField(default=datetime.now)
     last_change_date = models.DateTimeField(default=datetime.now)
     image = models.ImageField(upload_to='images', null=True)
+    manufactured_at = models.DateTimeField(default=datetime.now)

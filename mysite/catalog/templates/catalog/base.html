@@ -5,6 +5,14 @@
     <title>Product store</title>
 </head>
 <body>
+<div class="create button">
+    <a class="btn btn-primary" href="{% url 'catalog:list' %}" role="button">Каталог</a>
+    |
+    <a class="btn btn-primary" href="{% url 'catalog:create' %}" role="button">Добавить продукт</a>
+    |
+    <a class="btn btn-primary" href="{% url 'catalog:contact' %}" role="button">Контакты</a>
+</div>
+
 {% load static %}
 {% block content %}
 {% endblock %}

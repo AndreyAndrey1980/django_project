@@ -4,10 +4,10 @@ from .models import Product, Category
 
 
 class ProductAdmin(admin.ModelAdmin):
-    fields = ['name', 'price', 'category', 'image', 'description']
+    fields = ['name', 'price', 'category', 'image', 'description', 'publicate', 'slug']
     filter = ['category']
     search_fields = ['name', 'price']
-    list_display = ['name', 'price', 'category', 'id']
+    list_display = ['name', 'price', 'category', 'id', 'slug']
 
 
 class CategoryAdmin(admin.ModelAdmin):

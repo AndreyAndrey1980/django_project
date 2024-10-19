@@ -1,0 +1,18 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+{% load my_tags %}
+    <div class="product_block">
+        <h1>{{ object.name }}</h1>
+        <div>
+            <img class="card-img-top" src="{{ object.image | my_media}}" width="450" height="450">
+        </div>
+        <div>{{ object.description }}</div>
+        <div>price {{ object.price }} usd</div>
+        <div>category: {{ object.category }}</div>
+        <div>last change date: {{ object.last_change_date }} </div>
+        <div>views: {{ object.view_count }}</div>
+    </div>
+
+{% endblock %}

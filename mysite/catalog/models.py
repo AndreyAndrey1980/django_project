@@ -16,7 +16,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=255, unique=True, verbose_name="URL", null=True)
+    view_count = models.IntegerField(default=0)
+    publicate = models.BooleanField(default=True)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     price = models.IntegerField(null=True)

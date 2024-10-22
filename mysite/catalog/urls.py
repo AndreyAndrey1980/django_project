@@ -12,6 +12,12 @@ urlpatterns = [
     path("<int:pk>/delete", views.ProductDeleteView.as_view(), name="delete"),
     path("create", views.ProductCreateView.as_view(), name="create"),
     path("<int:pk>/update", views.ProductUpdateView.as_view(), name="update"),
+    path("blog/", views.BlogListView.as_view(), name="blog_list"),
+    path("blog/<slug:slug>/", views.BlogDetailView.as_view(), name='blog_detail'),
+    path("blog/<slug:slug>/delete", views.BlogDeleteView.as_view(), name="blog_delete"),
+    path("blog/create", views.BlogCreateView.as_view(), name="blog_create"),
+    path("blog/<slug:slug>/update", views.BlogUpdateView.as_view(), name="blog_update"),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

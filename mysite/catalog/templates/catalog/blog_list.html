@@ -1,0 +1,20 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+{% load my_tags %}
+{% for blog in object_list %}
+    <div class="product_block">
+        <a href="{% url 'catalog:blog_detail' blog.slug %}">{{ blog.title }}</a>
+        <div>
+            <img class="card-img-top" src="{{blog.image | my_media}}" width="150" height="150">
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-primary" href="{% url 'catalog:blog_update' blog.pk %}" role="button">Изменить</a>
+            <a class="btn btn-primary" href="{% url 'catalog:blog_delete' blog.pk %}" role="button">Удалить</a>
+        </div>
+        <div>--------------</div>
+    </div>
+{% endfor %}
+
+{% endblock %}

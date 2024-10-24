@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category
+from .models import Product, Category, Version
 # Register your models here.
 
 
@@ -15,5 +15,11 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'id']
 
 
+class VersionAdmin(admin.ModelAdmin):
+    field = ['product', 'version_name', 'version_number', 'is_current']
+    list_display = ['product', 'version_name', 'version_number', 'is_current']
+
+
+admin.site.register(Version, VersionAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)

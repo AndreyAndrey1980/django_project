@@ -47,3 +47,16 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    version_name = models.CharField(max_length=100)
+    version_number = models.CharField(max_length=10)
+    is_current = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.version_number
+
+    class Meta:
+        ordering = ('version_number',)

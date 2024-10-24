@@ -17,7 +17,9 @@ urlpatterns = [
     path("blog/<slug:slug>/delete", views.BlogDeleteView.as_view(), name="blog_delete"),
     path("blog/create", views.BlogCreateView.as_view(), name="blog_create"),
     path("blog/<slug:slug>/update", views.BlogUpdateView.as_view(), name="blog_update"),
-
+    path("create-version", views.VersionCreateView.as_view(), name="create_version"),
+    path("<int:pk>/update-version", views.ProductUpdateView.as_view(), name="update_version"),
+    path("<int:pk>/delete_version", views.VersionDeleteView.as_view(), name="delete_version")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

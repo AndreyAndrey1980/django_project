@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView, TemplateView
 from django.utils.text import slugify
 from .forms import ProductForm, VersionForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class ProductListView(ListView):
@@ -42,26 +43,33 @@ class GetContact(TemplateView):
     template_name = "contact.html"
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Product
     success_url = reverse_lazy('catalog:list')
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Product
     success_url = reverse_lazy('catalog:list')
     form_class = ProductForm
 
     def form_valid(self, form):
         if form.is_valid():
-            new_blog = form.save()
-            new_blog.slug = slugify(new_blog.name)
-            new_blog.save()
+            product = form.save()
+            product.slug = slugify(product.name)
+            product.user_email = self.request.user.email
+            product.save()
 
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Product
     success_url = reverse_lazy('catalog:list')
     form_class = ProductForm
@@ -84,12 +92,16 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Blog
     success_url = reverse_lazy('catalog:blog_list')
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Blog
     fields = ('title', 'text', 'image')
     success_url = reverse_lazy('catalog:blog_list')
@@ -103,24 +115,32 @@ class BlogCreateView(CreateView):
         return super().form_valid(form)
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Blog
     fields = ('title', 'text', 'image')
     success_url = reverse_lazy('catalog:blog_list')
 
 
-class VersionDeleteView(DeleteView):
+class VersionDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Version
     success_url = reverse_lazy('catalog:list')
 
 
-class VersionCreateView(CreateView):
+class VersionCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Version
     success_url = reverse_lazy('catalog:list')
     form_class = VersionForm
 
 
-class VersionUpdateView(UpdateView):
+class VersionUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/users/login'
+    redirect_field_name = 'redirect_to'
     model = Version
     success_url = reverse_lazy('catalog:list')
     form_class = VersionForm

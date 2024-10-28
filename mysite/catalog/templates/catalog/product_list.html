@@ -13,6 +13,7 @@
         <div>price {{ product.price }} usd</div>
         <div> version name: {{ product.actual_version.version_name }}</div>
         <div> version: {{ product.actual_version.version_number }}</div>
+        <div> user: {{ product.user_email }}</div>
         <div class="btn-group">
             <a class="btn btn-primary" href="{% url 'catalog:update' product.pk %}" role="button">Изменить</a>
             <a class="btn btn-primary" href="{% url 'catalog:delete' product.pk %}" role="button">Удалить</a>

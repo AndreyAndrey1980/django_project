@@ -26,11 +26,12 @@ SECRET_KEY = 'django-insecure-ubuo0a2$n@9hv34wk8i14=-t-^!0#f2jr2citi+(n7cd!5e4c5
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,3 +130,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+
+EMAIL_HOST_USER = 'fresh-products-from-andrei@yandex.ru'
+EMAIL_HOST_PASSWORD = 'fzevlcjqsvjvgbkd'
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+
+LOGIN_URL = '/catalog'
+LOGIN_REDIRECT_URL ='/catalog'
+LOGOUT_REDIRECT_URL ='/catalog'

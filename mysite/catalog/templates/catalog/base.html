@@ -17,6 +17,19 @@
     <a class="btn btn-primary" href="{% url 'catalog:create_version' %}" role="button">Добавить версию продукта</a>
     |
     <a class="btn btn-primary" href="{% url 'catalog:contact' %}" role="button">Контакты</a>
+    |
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'users:users_logout' %}">
+        {% csrf_token %}
+        <button type="submit">Выйти</button>
+    </form>
+
+    <img class="card-img-top" src="{{ user.avatar }}" width="25" height="25">
+    {% else %}
+    <a class="btn btn-primary" href="{% url 'users:users_login' %}?next=/catalog" role="button">Войти</a>
+    |
+    <a class="btn btn-primary" href="{% url 'users:users_register' %}" role="button">Регистрация</a>
+    {% endif %}
 
 </div>
 

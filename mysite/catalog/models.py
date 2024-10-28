@@ -26,6 +26,7 @@ class Product(models.Model):
     create_date = models.DateTimeField(default=datetime.now)
     last_change_date = models.DateTimeField(default=datetime.now)
     image = models.ImageField(upload_to='images', null=True)
+    user_email = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.name

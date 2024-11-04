@@ -4,8 +4,9 @@ from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView, TemplateView
 from django.utils.text import slugify
-from .forms import ProductForm, VersionForm
+from .forms import ProductForm, VersionForm, ProductFormForModerator
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 
 class ProductListView(ListView):
@@ -23,6 +24,9 @@ class ProductListView(ListView):
                 actual_version = current_versions[len(current_versions) - 1]
                 print(actual_version)
                 product.actual_version = actual_version
+                product.current_user_mail = self.request.user.email
+                if self.request.user.groups.filter(name="moders").exists():
+                    product.current_user_is_moderator = True
             except Exception:
                 product.actual_version = {}
 
@@ -73,6 +77,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     success_url = reverse_lazy('catalog:list')
     form_class = ProductForm
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.email == self.object.user_email:
+            return ProductForm
+        elif self.request.user.groups.filter(name="moders").exists():
+            return ProductFormForModerator
+        else:
+            raise PermissionDenied
 
 
 class BlogListView(ListView):

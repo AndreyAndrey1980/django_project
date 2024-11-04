@@ -35,6 +35,12 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
 
+        permissions = [
+            ("set_false_product_published_status", "Can cancel publicate product"),
+            ("change_product_description", "Can change product description"),
+            ("change_product_category", "Can change product category")
+        ]
+
 
 class Blog(models.Model):
     title = models.CharField(max_length=100)

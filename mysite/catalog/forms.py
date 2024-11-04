@@ -33,6 +33,22 @@ class ProductForm(forms.ModelForm):
         return cleaned_data
 
 
+class ProductFormForModerator(forms.ModelForm):
+
+    class Meta:
+        model = Product
+        fields = ["description", "publicate"]
+
+    def clean_description(self):
+        cleaned_data = self.cleaned_data.get('description')
+
+        if check_words_in_text(cleaned_data, BLACK_LIST_WORDS):
+            raise forms.ValidationError('Ошибка, нельзя использовать запрещенное слово')
+
+        return cleaned_data
+
+
+
 class VersionForm(forms.ModelForm):
 
     class Meta:

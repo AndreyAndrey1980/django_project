@@ -4,22 +4,34 @@
 
 {% load my_tags %}
 {% for product in object_list %}
-    <div class="product_block">
-        <a href="{% url 'catalog:detail' product.id %}">{{ product.name }}</a>
-        <div>
-            <img class="card-img-top" src="{{ product.image | my_media}}" width="150" height="150">
-        </div>
-        <div>{{ product.description | my_slice }}</div>
-        <div>price {{ product.price }} usd</div>
-        <div> version name: {{ product.actual_version.version_name }}</div>
-        <div> version: {{ product.actual_version.version_number }}</div>
-        <div> user: {{ product.user_email }}</div>
-        <div class="btn-group">
-            <a class="btn btn-primary" href="{% url 'catalog:update' product.pk %}" role="button">Изменить</a>
-            <a class="btn btn-primary" href="{% url 'catalog:delete' product.pk %}" role="button">Удалить</a>
-        </div>
-        <div>--------------</div>
+<div class="product_block">
+    <a href="{% url 'catalog:detail' product.id %}">{{ product.name }}</a>
+    <div>
+        <img class="card-img-top" src="{{ product.image | my_media}}" width="150" height="150">
     </div>
+    <div>{{ product.description | my_slice }}</div>
+    <div>price {{ product.price }} usd</div>
+    <div> version name: {{ product.actual_version.version_name }}</div>
+    <div> version: {{ product.actual_version.version_number }}</div>
+    <div> user: {{ product.user_email }}</div>
+    {% if user.is_authenticated %}
+        {% if product.user_email == product.current_user_mail %}
+    <div class="btn-group">
+        <a class="btn btn-primary" href="{% url 'catalog:update' product.pk %}" role="button">Изменить</a>
+        <a class="btn btn-primary" href="{% url 'catalog:delete' product.pk %}" role="button">Удалить</a>
+    </div>
+        {% else %}
+            {% if product.current_user_is_moderator %}
+        <div class="btn-group">
+        <a class="btn btn-primary" href="{% url 'catalog:update' product.pk %}" role="button">Изменить</a>
+        </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+
+    <div>--------------</div>
+</div>
 {% endfor %}
 
 {% endblock %}

@@ -12,15 +12,21 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# Чтение файла с переменными окружения
+dot_env = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path=dot_env)
+
+# Использование переменных окружения
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+SECRET_KEY = os.getenv('SECRET_KEY')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ubuo0a2$n@9hv34wk8i14=-t-^!0#f2jr2citi+(n7cd!5e4c5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -146,3 +152,13 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 LOGIN_URL = '/catalog'
 LOGIN_REDIRECT_URL = '/catalog'
 LOGOUT_REDIRECT_URL = '/catalog'
+
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379",
+            "TIMEOUT": 60  # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
+        }
+    }

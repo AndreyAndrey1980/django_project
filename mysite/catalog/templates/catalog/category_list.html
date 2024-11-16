@@ -1,0 +1,14 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+{% load my_tags %}
+{% for category in object_list %}
+    <div class="category_block">
+        <div> category: {{ category.name }}</div>
+        <div> description: {{category.description }}</div>
+    </div>
+<div>--------------</div>
+{% endfor %}
+
+{% endblock %}

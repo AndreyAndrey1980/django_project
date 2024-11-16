@@ -1,10 +1,12 @@
-from .models import Product, Blog, Version
+from .models import Product, Blog, Version, Category
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView, TemplateView
 from django.utils.text import slugify
 from .forms import ProductForm, VersionForm, ProductFormForModerator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
+from django.core.cache import cache
 
 
 class ProductListView(ListView):
@@ -155,6 +157,27 @@ class VersionUpdateView(LoginRequiredMixin, UpdateView):
     model = Version
     success_url = reverse_lazy('catalog:list')
     form_class = VersionForm
+
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        category_list = None
+        if settings.CACHE_ENABLED:
+            # Проверяем включенность кеша
+            key = 'category'  # Создаем ключ для хранения
+            category_list = cache.get(key)  # Пытаемся получить данные
+            print(f"результат кэша {category_list}")
+            if category_list is None:
+                # Если данные не были получены из кеша, то выбираем из БД и записываем в кеш
+                category_list = Category.objects.all()
+                cache.set(key, category_list, 60)
+        else:
+            # Если кеш не был подключен, то просто обращаемся к БД
+            category_list = Category.objects.all()
+        # Возвращаем результат
+        return category_list
 
 # def get_contact_info(request):
 #    return render(request, "catalog/contact.html", {})

@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def json_read_catalog():
-    # Здесь мы получаем данные из фикстурв с категориями
+        # Здесь мы получаем данные из фикстур с категориями
         with open("catalog/catalog_data.json") as f:
             return json.load(f)
 

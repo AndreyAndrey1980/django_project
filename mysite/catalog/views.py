@@ -1,6 +1,4 @@
-from django.shortcuts import render
-from .models import Product, Category, Blog, Version
-from django.http import Http404
+from .models import Product, Blog, Version
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, ListView, TemplateView
 from django.utils.text import slugify

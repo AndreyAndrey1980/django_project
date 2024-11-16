@@ -1,8 +1,5 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.views import LoginView, PasswordResetView
-from django.contrib.auth.forms import PasswordResetForm
+from django.views.generic import CreateView
+from django.contrib.auth.views import LoginView
 from .models import User
 from django.views.generic.edit import FormView
 from .forms import RegisterForm, EmailForm

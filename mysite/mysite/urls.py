@@ -23,4 +23,3 @@ urlpatterns = [
     path('catalog/', include('catalog.urls')),
     path('users/', include('users.urls'))
 ]
-
